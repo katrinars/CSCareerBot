@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml>
+    <category>
+        <pattern>*</pattern>
+        <template>
+            HEY THERE!
+            <split/>
+            I'm Lisa, your virtual career advisor. You're in the Computer Science program right?
+            <reply>
+                <text>YES!</text>
+                <postback>START</postback>
+            </reply>
+            <reply>
+                <text>NO.</text>
+                <postback>END</postback>
+            </reply>
+        </template>
+    </category> 
+    <category>
+        <pattern>END</pattern>
+        <template>Uhoh, you're in the wrong place. Try contacting your mentor.</template>
+    </category>
+    <category>
+        <pattern>START</pattern>
+        <template>
+            Great! You're in the right place.
+            <split/>
+            By the way, who am I speaking with?
+        </template>
+    </category>
+    <category>
+        <pattern>MY NAME IS *</pattern>
+        <template>
+            Got it, I'll call you <set name="name"><star/></set> from now on.
+            <split/>
+            So <get name="name" />, in order to find the right career for you we'll need to assess your strengths, interests, favorite subjects, and what inspires you. Which topic would you like to explore first?
+            <reply>
+                <text>STRENGTHS</text>
+                <postback>STRENGTHS</postback>
+            </reply>
+            <reply>
+                <text>INTERESTS</text>
+                <postback>INTERESTS</postback>
+            </reply>
+            <reply>
+                <text>SUBJECTS</text>
+                <postback>SUBJECTS</postback>
+            </reply>
+            <reply>
+                <text>INSPIRATION</text>
+                <postback>INSPIRATION</postback>
+            </reply>
+        </template>
+    </category>
+    <category>
+        <pattern>STRENGTHS</pattern>
+        <template>
+            Choose your biggest strength from the options below.
+            <carousel>
+                <card>
+                    <title>STRATEGIC</title>
+                    <subtitle>the ability to plan effectively</subtitle>
+                    <button>
+                        <text>Choose Strength</text>
+                        <postback>STRATEGIC</postback>
+                    </button>
+                </card>
+                <card>
+                    <title>ATTENTION TO DETAIL</title>
+                    <subtitle>the ability to focus on all areas of a project, big and small</subtitle>
+                    <button>
+                        <text>Choose Strength</text>
+                        <postback>DETAIL</postback>
+                    </button>
+                </card>
+                <card>
+                    <title>CREATIVITY</title>
+                    <subtitle>the ability to develop original ideas using imagination</subtitle>
+                    <button>
+                        <text>Choose Strength</text>
+                        <postback>CREATIVITY</postback>
+                    </button>
+                </card>
+            </carousel>
+        </template>
+    </category>
+    <category>
+        <pattern>INTERESTS</pattern>
+        <template>
+            Choose what you're most interested in from the options below.
+            <carousel>
+                <card>
+                    <image>https://media.geeksforgeeks.org/wp-content/uploads/20200613235615/Untitled271.png</image>
+                    <title>DESIGN</title>
+                    <subtitle>Image Credit: Geeks for Geeks</subtitle>
+                    <button>
+                        <text>Choose Interest</text>
+                        <postback>DESIGN</postback>
+                    </button>
+                </card>
+                <card>
+                    <image>https://imageio.forbes.com/specials-images/imageserve/633ab081896f45d78d8286fd/Focused-multiracial-corporate-business-team-people-brainstorm-on-paperwork/960x0.jpg?format=jpg&amp;width=1440</image>
+                    <title>COLLABORATION</title>
+                    <subtitle>Image Credit: Forbes</subtitle>
+                    <button>
+                        <text>Choose Interest</text>
+                        <postback>COLLABORATION</postback>
+                    </button>
+                </card>
+                <card>
+                    <image>https://imageio.forbes.com/specials-images/imageserve/63cae666a1d8bd53146e3aec/Bulb-means-an-idea-/960x0.jpg?format=jpg&amp;width=1440</image>
+                    <title>INNOVATION</title>
+                    <subtitle>Image Credit: Forbes</subtitle>
+                    <button>
+                        <text>Choose Interest</text>
+                        <postback>INNOVATION</postback>
+                    </button>
+                </card>
+            </carousel>
+        </template>
+    </category>
+    <category>
+        <pattern>SUBJECTS</pattern>
+        <template>
+            Choose your favorite subject from the options below.
+            <carousel>
+                <card>
+                    <image>https://richmondcc.edu/sites/default/files/public/Photos/001_0.jpg</image>
+                    <title>ART</title>
+                    <subtitle>Image Credit: Richmond Community College</subtitle>
+                    <button>
+                        <text>Choose Subject</text>
+                        <postback>ART</postback>
+                    </button>
+                </card>
+                <card>
+                    <image>https://cdn.stmarytx.edu/wp-content/uploads/2023/08/apply-masters-program-st-marys.jpg</image>
+                    <title>MATH</title>
+                    <subtitle>Image Credit: St. Mary's University</subtitle>
+                    <button>
+                        <text>Choose Subject</text>
+                        <postback>MATH</postback>
+                    </button>
+                </card>
+                <card>
+                    <image>https://img-aws.ehowcdn.com/1440x520/s3-us-west-1.amazonaws.com/contentlab.studiod/getty/ab025e4ef8614d56885ca479ad8cbe26.jpg?type=webp</image>
+                    <title>ENGLISH</title>
+                    <subtitle>Image Credit: The Classroom</subtitle>
+                    <button>
+                        <text>Choose Subject</text>
+                        <postback>ENGLISH</postback>
+                    </button>
+                </card>
+            </carousel>
+        </template>
+    </category>
+        <category>
+        <pattern>INSPIRATION</pattern>
+        <template>
+            Choose what inspires you most from the options below.
+            <carousel>
+                <card>
+                    <title>FUN</title>
+                    <subtitle>I'm inspired by a career filled with play and laughter.</subtitle>
+                    <button>
+                        <text>Choose Inspiration</text>
+                        <postback>FUN</postback>
+                    </button>
+                </card>
+                <card>
+                    <title>VISION</title>
+                    <subtitle>I'm inspired by a career that allows me to see my ideas come to life.</subtitle>
+                    <button>
+                        <text>Choose Inspiration</text>
+                        <postback>VISION</postback>
+                    </button>
+                </card>
+                <card>
+                    <title>PRESTIGE</title>
+                    <subtitle>I'm inspired by a career that puts me in the spotlight.</subtitle>
+                    <button>
+                        <text>Choose Inspiration</text>
+                        <postback>PRESTIGE</postback>
+                    </button>
+                </card>
+            </carousel>
+        </template>
+    </category>
+</aiml>
