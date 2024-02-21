@@ -1,100 +1,206 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <aiml>
+    # if error, provide startup instructions and last instruction
     <category>
         <pattern>*</pattern>
         <template>
-            HEY THERE!
+            Sorry, I don't recognize that. <br/><br/>
+            Please reread the instructions carefully.
             <split/>
-            I'm Lisa, your virtual career advisor. You're in the Computer Science program right?
-            <reply>
-                <text>YES!</text>
-                <postback>START</postback>
-            </reply>
-            <reply>
-                <text>NO.</text>
-                <postback>END</postback>
-            </reply>
+            <response index="1" />
+        </template>
+    </category>
+    
+    # introduce bot avatar
+    <category>
+        <pattern>career</pattern>
+        <template>
+            <random>
+                <li>
+                    <card>
+                        <image>https://miro.medium.com/v2/resize:fit:640/format:webp/1*lyyXmbeoK5JiIBNCnzzjjg.png</image>
+                        <title>HEY THERE!</title>
+                        <subtitle>
+                            I'm Lisa, your virtual career advisor. You're in the Computer Science program right?
+                        </subtitle>
+                        <button>
+                            <text>YES!</text>
+                            <postback>START</postback>
+                        </button>
+                        <button>
+                            <text>NO.</text>
+                            <postback>END</postback>
+                        </button>
+                    </card>
+                </li>
+                <li>
+                    <card>
+                        <image>https://media.architecturaldigest.com/photos/5f241de2c850b2a36b415024/master/w_1280,c_limit/Luke-logo.png</image>
+                        <title>HIYA!</title>
+                        <subtitle>
+                            I'm Dan. I'm here to help you find a career. You're studying Computer Science right?
+                        </subtitle>
+                        <button>
+                            <text>YES!</text>
+                            <postback>START</postback>
+                        </button>
+                        <button>
+                            <text>NO.</text>
+                            <postback>END</postback>
+                        </button>
+                    </card>
+                </li>
+                <li>
+                    <card>
+                        <image>https://humancapitalonline.com/uploads/page_img/amara_.jpg</image>
+                        <title>HOWDY!</title>
+                        <subtitle>
+                            My name is Diane. Let's find you a career! You're a Computer Science student right?
+                            </subtitle>
+                        <button>
+                            <text>YES!</text>
+                            <postback>START</postback>
+                        </button>
+                        <button>
+                            <text>NO.</text>
+                            <postback>END</postback>
+                        </button>
+                    </card>
+                </li>
+            </random>
         </template>
     </category> 
+    
+    # route CS students through logic or non-CS students to external resource
     <category>
         <pattern>END</pattern>
-        <template>Uhoh, you're in the wrong place. Try contacting your mentor.</template>
+        <template>Oh no, you're in the wrong place. Contact your mentor for the link to your degree program's career advisor.</template>
     </category>
     <category>
         <pattern>START</pattern>
         <template>
             Great! You're in the right place.
             <split/>
-            By the way, who am I speaking with?
+            <condition>
+                
+            </condition>
+            By the way, who am I speaking with? Tell me your name by typing and filling in the following sentence:<br/><br/>
+            My name is ____
         </template>
     </category>
+    
+    # store name and route to strengths query
     <category>
         <pattern>MY NAME IS *</pattern>
         <template>
-            Got it, I'll call you <set name="name"><star/></set> from now on.
+            Got it! I'll call you <set name="name"><star/></set> from now on.
             <split/>
-            So <get name="name" />, in order to find the right career for you we'll need to assess your strengths, interests, favorite subjects, and what inspires you. Which topic would you like to explore first?
-            <reply>
-                <text>STRENGTHS</text>
+            <delay>3</delay>
+            So <get name="name" />, in order to find the right career for you we'll need to assess your strengths, interests, and what inspires you.
+            <split/>
+            <button>
+                <text>SOUNDS GOOD!</text>
                 <postback>STRENGTHS</postback>
-            </reply>
-            <reply>
-                <text>INTERESTS</text>
-                <postback>INTERESTS</postback>
-            </reply>
-            <reply>
-                <text>SUBJECTS</text>
-                <postback>SUBJECTS</postback>
-            </reply>
-            <reply>
-                <text>INSPIRATION</text>
-                <postback>INSPIRATION</postback>
-            </reply>
+            </button>
         </template>
     </category>
+     
+    # present strengths options      
     <category>
         <pattern>STRENGTHS</pattern>
         <template>
             Choose your biggest strength from the options below.
             <carousel>
                 <card>
-                    <title>STRATEGIC</title>
-                    <subtitle>the ability to plan effectively</subtitle>
+                    <image>https://cdn.businessday.ng/2020/11/Strategy.jpg</image>
+                    <title>STRATEGY</title>
+                    <subtitle>Image Credit: Business Day</subtitle>
                     <button>
-                        <text>Choose Strength</text>
-                        <postback>STRATEGIC</postback>
+                        <text>Choose this Strength</text>
+                        <postback>STRATEGY</postback>
                     </button>
                 </card>
                 <card>
+                    <image>https://cdn1.careeraddict.com/uploads/article/59019/illustration-magnifying-glass-laptop.png</image>
                     <title>ATTENTION TO DETAIL</title>
-                    <subtitle>the ability to focus on all areas of a project, big and small</subtitle>
+                    <subtitle>Image Credit: CareerAddict</subtitle>
                     <button>
-                        <text>Choose Strength</text>
+                        <text>Choose this Strength</text>
                         <postback>DETAIL</postback>
                     </button>
                 </card>
                 <card>
+                    <image>https://miro.medium.com/v2/resize:fit:640/format:webp/1*DFs24mX1l4gvOK0z7AHtzw.png</image>
                     <title>CREATIVITY</title>
-                    <subtitle>the ability to develop original ideas using imagination</subtitle>
+                    <subtitle>Image Credit: Medium</subtitle>
                     <button>
-                        <text>Choose Strength</text>
+                        <text>Choose this Strength</text>
                         <postback>CREATIVITY</postback>
                     </button>
                 </card>
             </carousel>
         </template>
     </category>
+    
+    # store strength selection and route to interests query
+    <category>
+        <pattern>STRATEGY</pattern>
+        <template>
+            <think><set name="strengths">strategy</set></think>
+            You excel at STRATEGY. Is that correct?
+            <reply>
+                <text>Yes, let's go to interests.</text>
+                <postback>INTERESTS</postback>
+            </reply>
+            <reply>
+                <text>No, start over.</text>
+                <postback>STRENGTHS</postback>
+            </reply>
+        </template>
+    </category>
+    <category>
+        <pattern>DETAIL</pattern>
+        <template>
+            <think><set name="strengths">detail</set></think>
+            You're great with ATTENTION TO DETAIL. Is that correct?
+            <reply>
+                <text>That's right!</text>
+                <postback>INTERESTS</postback>
+            </reply>
+            <reply>
+                <text>No, choose again.</text>
+                <postback>STRENGTHS</postback>
+            </reply>
+        </template>
+    </category>
+    <category>
+        <pattern>CREATIVITY</pattern>
+        <template>
+            <think><set name="strengths">creativity</set></think>
+            Your strength is CREATIVITY, right?
+            <reply>
+                <text>Yes, let's go to interests.</text>
+                <postback>INTERESTS</postback>
+            </reply>
+            <reply>
+                <text>No, start over.</text>
+                <postback>STRENGTHS</postback>
+            </reply>
+        </template>
+    </category>
+    
+    # present interest options
     <category>
         <pattern>INTERESTS</pattern>
         <template>
             Choose what you're most interested in from the options below.
             <carousel>
                 <card>
-                    <image>https://media.geeksforgeeks.org/wp-content/uploads/20200613235615/Untitled271.png</image>
+                    <image>https://miro.medium.com/v2/resize:fit:720/format:webp/1*cyFiPYlORkVo6N75h9AXSw.png</image>
                     <title>DESIGN</title>
-                    <subtitle>Image Credit: Geeks for Geeks</subtitle>
+                    <subtitle>Image Credit: Medium</subtitle>
                     <button>
-                        <text>Choose Interest</text>
+                        <text>Choose this Interest</text>
                         <postback>DESIGN</postback>
                     </button>
                 </card>
@@ -103,7 +209,7 @@
                     <title>COLLABORATION</title>
                     <subtitle>Image Credit: Forbes</subtitle>
                     <button>
-                        <text>Choose Interest</text>
+                        <text>Choose this Interest</text>
                         <postback>COLLABORATION</postback>
                     </button>
                 </card>
@@ -112,78 +218,287 @@
                     <title>INNOVATION</title>
                     <subtitle>Image Credit: Forbes</subtitle>
                     <button>
-                        <text>Choose Interest</text>
+                        <text>Choose this Interest</text>
                         <postback>INNOVATION</postback>
                     </button>
                 </card>
             </carousel>
         </template>
     </category>
-    <category>
-        <pattern>SUBJECTS</pattern>
+   
+   # store interest and route to inspiration query
+   <category>
+        <pattern>DESIGN</pattern>
         <template>
-            Choose your favorite subject from the options below.
-            <carousel>
-                <card>
-                    <image>https://richmondcc.edu/sites/default/files/public/Photos/001_0.jpg</image>
-                    <title>ART</title>
-                    <subtitle>Image Credit: Richmond Community College</subtitle>
-                    <button>
-                        <text>Choose Subject</text>
-                        <postback>ART</postback>
-                    </button>
-                </card>
-                <card>
-                    <image>https://cdn.stmarytx.edu/wp-content/uploads/2023/08/apply-masters-program-st-marys.jpg</image>
-                    <title>MATH</title>
-                    <subtitle>Image Credit: St. Mary's University</subtitle>
-                    <button>
-                        <text>Choose Subject</text>
-                        <postback>MATH</postback>
-                    </button>
-                </card>
-                <card>
-                    <image>https://img-aws.ehowcdn.com/1440x520/s3-us-west-1.amazonaws.com/contentlab.studiod/getty/ab025e4ef8614d56885ca479ad8cbe26.jpg?type=webp</image>
-                    <title>ENGLISH</title>
-                    <subtitle>Image Credit: The Classroom</subtitle>
-                    <button>
-                        <text>Choose Subject</text>
-                        <postback>ENGLISH</postback>
-                    </button>
-                </card>
-            </carousel>
+            <think><set name="interests">design</set></think>
+            You're interested in DESIGN. Is that correct?
+            <reply>
+                <text>Yes, let's go to inspiration.</text>
+                <postback>INSPIRATION</postback>
+            </reply>
+            <reply>
+                <text>No, go back.</text>
+                <postback>INTERESTS</postback>
+            </reply>
         </template>
     </category>
-        <category>
+    <category>
+        <pattern>COLLABORATION</pattern>
+        <template>
+            <think><set name="interests">collaboration</set></think>
+            You're interested in COLLABORATION, right?
+            <reply>
+                <text>That's right!</text>
+                <postback>INSPIRATION</postback>
+            </reply>
+            <reply>
+                <text>No, go back.</text>
+                <postback>INTERESTS</postback>
+            </reply>
+        </template>
+    </category>
+    <category>
+        <pattern>INNOVATION</pattern>
+        <template>
+            <think><set name="interests">innovation</set></think>
+            You're interested in INNOVATION. Is that correct?
+            <reply>
+                <text>Yes, let's go to inspiration.</text>
+                <postback>INSPIRATION</postback>
+            </reply>
+            <reply>
+                <text>No, go back.</text>
+                <postback>INTERESTS</postback>
+            </reply>
+        </template>
+    </category>
+   
+   # present inspiration options
+    <category>
         <pattern>INSPIRATION</pattern>
         <template>
             Choose what inspires you most from the options below.
             <carousel>
                 <card>
+                    <image>https://img.huffingtonpost.com/asset/5e696095230000a6210c39b6.jpeg?ops=scalefit_720_noupscale&amp;format=webp</image>
                     <title>FUN</title>
-                    <subtitle>I'm inspired by a career filled with play and laughter.</subtitle>
+                    <subtitle>Image Credit: HuffPost</subtitle>
                     <button>
-                        <text>Choose Inspiration</text>
+                        <text>Choose this Inspiration</text>
                         <postback>FUN</postback>
                     </button>
                 </card>
                 <card>
+                    <image>https://sourcesofinsight.com/wp-content/uploads/2015/06/image_thumb1.png</image>
                     <title>VISION</title>
-                    <subtitle>I'm inspired by a career that allows me to see my ideas come to life.</subtitle>
+                    <subtitle>Image Credit: Sources of Insight</subtitle>
                     <button>
-                        <text>Choose Inspiration</text>
+                        <text>Choose this Inspiration</text>
                         <postback>VISION</postback>
                     </button>
                 </card>
                 <card>
+                    <image>https://nsckenticotest.blob.core.windows.net/cms/nsc.org/media/site-media/blog/featured/award700x450.jpg?ext=.jpg</image>
                     <title>PRESTIGE</title>
-                    <subtitle>I'm inspired by a career that puts me in the spotlight.</subtitle>
+                    <subtitle>Image Credit: National Safety Council</subtitle>
                     <button>
-                        <text>Choose Inspiration</text>
+                        <text>Choose this Inspiration</text>
                         <postback>PRESTIGE</postback>
                     </button>
                 </card>
             </carousel>
+        </template>
+    </category>
+    
+    # store inspiration and route to career presenter
+    <category>
+        <pattern>FUN</pattern>
+        <template>
+            <think><set name="inspiration">fun</set></think>
+            You're inspired by a FUN career, right?
+            <reply>
+                <text>Yes! Show me my career match.</text>
+                <postback>RENDER</postback>
+            </reply>
+            <reply>
+                <text>No, choose again.</text>
+                <postback>INSPIRATION</postback>
+            </reply>
+        </template>
+    </category>
+    <category>
+        <pattern>VISION</pattern>
+        <template>
+            <think><set name="inspiration">vision</set></think>
+            You're inspired by the opportunity to express your VISION, right?
+            <reply>
+                <text>Yes! Show me my career match.</text>
+                <postback>RENDER</postback>
+            </reply>
+            <reply>
+                <text>No, choose again.</text>
+                <postback>INSPIRATION</postback>
+            </reply>
+        </template>
+    </category>
+    <category>
+        <pattern>PRESTIGE</pattern>
+        <template>
+            <think><set name="inspiration">prestige</set></think>
+            You're inspired by the potential for PRESTIGE. Is that correct?
+            <reply>
+                <text>Yes! Show me my career match.</text>
+                <postback>RENDER</postback>
+            </reply>
+            <reply>
+                <text>No, choose again.</text>
+                <postback>INSPIRATION</postback>
+            </reply>
+        </template>
+    </category>
+    
+    # present career
+    <category>
+        <pattern>RENDER</pattern>
+        <template>
+            <condition name="strengths">
+                <li value="strategy">
+                    <condition name="interests">
+                        <li value="design">
+                            <condition name="inspiration">
+                                <li value="fun"><think><set name="careers">NLP Scientist</set></think></li>
+                                <li value="vision"><think><set name="careers">Solutions Architect</set></think></li>
+                                <li value="prestige"><think><set name="careers">Software Engineer</set></think></li>
+                            </condition>
+                        </li>
+                    </condition>
+                    <condition name="interests">
+                        <li value="collaboration">
+                            <condition name="inspiration">
+                                <li value="fun"><think><set name="careers">Software Engineer</set></think></li>
+                                <li value="vision"><think><set name="careers">Solutions Architect</set></think></li>
+                                <li value="prestige"><think><set name="careers">Software Engineer</set></think></li>
+                            </condition>
+                        </li>
+                    </condition>
+                    <condition name="interests">
+                        <li value="innovation"><think><set name="careers">NLP Scientist</set></think></li>
+                    </condition>
+                </li>
+                <li value="detail">
+                    <condition name="interests">
+                        <li value="design">
+                            <condition name="inspiration">
+                                <li value="fun"><think><set name="careers">UX Designer</set></think></li>
+                                <li value="vision"><think><set name="careers">Solutions Architect</set></think></li>
+                                <li value="prestige"><think><set name="careers">Software Engineer</set></think></li>
+                            </condition>
+                        </li>
+                    </condition>
+                    <condition name="interests">
+                        <li value="innovation">
+                            <condition name="inspiration">
+                                <li value="fun"><think><set name="careers">UX Designer</set></think></li>
+                                <li value="vision"><think><set name="careers">NLP Scientist</set></think></li>
+                                <li value="prestige"><think><set name="careers">NLP Scientist</set></think></li>
+                            </condition>
+                        </li>
+                    </condition>
+                </li>
+                <li value="creativity">
+                    <condition name="interests">
+                        <li value="design"><think><set name="careers">UX Designer</set></think></li>
+                    </condition>
+                    <condition name="interests">
+                        <li value="collaboration"><think><set name="careers">Game Developer</set></think></li>
+                    </condition>
+                    <condition name="interests">
+                        <li value="innovation"><think><set name="careers">UX Designer</set></think></li>
+                    </condition>
+                </li>
+            </condition>
+            
+            Your perfect career match is...
+            <delay>2</delay>
+            <condition name="careers">
+                <li value="Software Engineer">
+                    <card>
+                        <image>https://www.techasoft.com/blog/2020/11/1605160119.jpg</image>
+                        <title>SOFTWARE ENGINEER</title>
+                        <subtitle>Image Credit: Techasoft</subtitle>
+                        <button>
+                            <text>Explore This Career</text>
+                            <url>https://www.wgu.edu/career-guide/information-technology/software-engineer-career.html</url>
+                        </button>
+                        <button>
+                            <text>See Job Openings</text>
+                            <url>https://www.linkedin.com/jobs/search/?currentJobId=3831145986&amp;keywords=software%20engineer&amp;origin=JOB_SEARCH_PAGE_SEARCH_BUTTON&amp;refresh=true</url>
+                        </button>
+                        
+                    </card>
+                </li>
+                <li value="UX Designer">
+                    <card>
+                        <image>https://images.ctfassets.net/aq13lwl6616q/SKjadNj7ZN5QcUZmzI7G2/650d8c7c23a66702c7469ffb78d0ee2b/Become_a_UI_UX_Designer.jpg?w=400&amp;h=225&amp;q=50&amp;fm=webp&amp;bg=transparent</image>
+                        <title>UX DESIGNER</title>
+                        <subtitle>Image Credit: Zero to Mastery</subtitle>
+                        <button>
+                            <text>Explore This Career</text>
+                            <url>https://www.wgu.edu/career-guide/information-technology/ux-designer-career.html</url>
+                        </button>
+                        <button>
+                            <text>See Job Openings</text>
+                            <url>https://www.linkedin.com/jobs/search/?keywords=%22ux%20designer%22&amp;location=United%20States&amp;origin=JOB_SEARCH_PAGE_SEARCH_BUTTON&amp;refresh=true</url>
+                        </button>
+                    </card>
+                </li>
+                <li value="Information Manager">
+                    <card>
+                        <image>https://images.ctfassets.net/pdf29us7flmy/41pdeRHbaKm8rJr8TzPgdA/5f4bdfc0838fd94575785935867762ad/information-management-new.jpg?w=414&amp;q=100&amp;fm=avif</image>
+                        <title>INFORMATION MANAGER</title>
+                        <subtitle>Image Credit: Indeed</subtitle>
+                        
+                        <button>
+                            <text>Explore This Career</text>
+                            <url>https://www.wgu.edu/career-guide/information-technology/information-manager-career.html</url>
+                        </button>
+                        <button>
+                            <text>See Job Openings</text>
+                            <url>https://www.linkedin.com/jobs/search/?keywords=%22information%20manager%22&amp;location=United%20States&amp;origin=JOB_SEARCH_PAGE_SEARCH_BUTTON&amp;refresh=true</url>
+                        </button>
+                    </card>
+                </li>
+                <li value="NLP Scientist">
+                    <card>
+                        <image>https://www.johnsnowlabs.com/wp-content/uploads/2023/03/img_blog-1-1024x536.jpg</image>
+                        <title>NLP SCIENTIST</title>
+                        <subtitle>Image Credit: John Snow Labs</subtitle>
+                        <button>
+                            <text>Explore This Career</text>
+                            <url>https://www.wgu.edu/career-guide/information-technology/nlp-scientist-career.html</url>
+                        </button>
+                        <button>
+                            <text>See Job Openings</text>
+                            <url>https://www.linkedin.com/jobs/search/?keywords=%22NLP%20SCIENTIST%22&amp;location=United%20States&amp;origin=JOB_SEARCH_PAGE_SEARCH_BUTTON&amp;refresh=true</url>
+                        </button>
+                    </card>
+                </li>
+                <li value="Game Developer">
+                    <card>
+                        <image>https://hashbytestudio.com/wp-content/uploads/2021/01/Game-Development-banner-1024x808.png</image>
+                        <title>GAME DEVELOPER</title>
+                        <subtitle>Image Credit: Hash by the Studio</subtitle>
+                        <button>
+                            <text>Explore This Career</text>
+                            <url>https://www.wgu.edu/career-guide/information-technology/video-game-developer-career.html</url>
+                        </button>
+                        <button>
+                            <text>See Job Openings</text>
+                            <url>https://www.linkedin.com/jobs/search/?keywords=%22game%20developer%22&amp;location=United%20States&amp;origin=JOB_SEARCH_PAGE_SEARCH_BUTTON&amp;refresh=true</url>
+                        </button>
+                    </card>
+                </li>
+            </condition>
         </template>
     </category>
 </aiml>
