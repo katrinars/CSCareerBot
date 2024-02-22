@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml version="2.0">
+<!-- insert your AIML categories here -->
+
+    # route CS students through logic or non-CS students to external resource
+    <category>
+        <pattern>END</pattern>
+        <template>Oh no, you're in the wrong place. Contact your mentor for the link to your degree program's career advisor.</template>
+    </category>
+    <category>
+        <pattern>START</pattern>
+        <template>
+            Great! You're in the right place.
+            <split/>
+            <condition>
+                
+            </condition>
+            By the way, who am I speaking with? Tell me your name by typing and filling in the following sentence:<br/><br/>
+            My name is ____
+        </template>
+    </category>
+
+
+</aiml>
+

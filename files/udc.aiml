@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <aiml>
+    
     # if error, provide startup instructions and last instruction
     <category>
         <pattern>*</pattern>
         <template>
             Sorry, I don't recognize that. <br/><br/>
-            Please reread the instructions carefully.
+            Please reread the instructions carefully or type "career" to speak with a virtual career advisor.
             <split/>
             <response index="1" />
         </template>
@@ -21,7 +22,7 @@
                         <image>https://miro.medium.com/v2/resize:fit:640/format:webp/1*lyyXmbeoK5JiIBNCnzzjjg.png</image>
                         <title>HEY THERE!</title>
                         <subtitle>
-                            I'm Lisa, your virtual career advisor. You're in the Computer Science program right?
+                            I'm Lisa, your virtual career advisor. You're in the Computer Science program, right?
                         </subtitle>
                         <button>
                             <text>YES!</text>
@@ -38,7 +39,7 @@
                         <image>https://media.architecturaldigest.com/photos/5f241de2c850b2a36b415024/master/w_1280,c_limit/Luke-logo.png</image>
                         <title>HIYA!</title>
                         <subtitle>
-                            I'm Dan. I'm here to help you find a career. You're studying Computer Science right?
+                            I'm Dan. I'm here to help you find a career. You're studying Computer Science, right?
                         </subtitle>
                         <button>
                             <text>YES!</text>
@@ -55,7 +56,7 @@
                         <image>https://humancapitalonline.com/uploads/page_img/amara_.jpg</image>
                         <title>HOWDY!</title>
                         <subtitle>
-                            My name is Diane. Let's find you a career! You're a Computer Science student right?
+                            My name is Diane. Let's find you a career! You're a Computer Science student, right?
                             </subtitle>
                         <button>
                             <text>YES!</text>
@@ -71,23 +72,7 @@
         </template>
     </category> 
     
-    # route CS students through logic or non-CS students to external resource
-    <category>
-        <pattern>END</pattern>
-        <template>Oh no, you're in the wrong place. Contact your mentor for the link to your degree program's career advisor.</template>
-    </category>
-    <category>
-        <pattern>START</pattern>
-        <template>
-            Great! You're in the right place.
-            <split/>
-            <condition>
-                
-            </condition>
-            By the way, who am I speaking with? Tell me your name by typing and filling in the following sentence:<br/><br/>
-            My name is ____
-        </template>
-    </category>
+    
     
     # store name and route to strengths query
     <category>
@@ -96,7 +81,7 @@
             Got it! I'll call you <set name="name"><star/></set> from now on.
             <split/>
             <delay>3</delay>
-            So <get name="name" />, in order to find the right career for you we'll need to assess your strengths, interests, and what inspires you.
+            So <get name="name" />, to find the right career for you we'll need to assess your strengths, interests, and what inspires you.
             <split/>
             <button>
                 <text>SOUNDS GOOD!</text>
@@ -114,7 +99,7 @@
                 <card>
                     <image>https://cdn.businessday.ng/2020/11/Strategy.jpg</image>
                     <title>STRATEGY</title>
-                    <subtitle>Image Credit: Business Day</subtitle>
+                    <subtitle>the ability to create effective plans</subtitle>
                     <button>
                         <text>Choose this Strength</text>
                         <postback>STRATEGY</postback>
@@ -123,7 +108,7 @@
                 <card>
                     <image>https://cdn1.careeraddict.com/uploads/article/59019/illustration-magnifying-glass-laptop.png</image>
                     <title>ATTENTION TO DETAIL</title>
-                    <subtitle>Image Credit: CareerAddict</subtitle>
+                    <subtitle>the ability to focus on small aspects of larger projects</subtitle>
                     <button>
                         <text>Choose this Strength</text>
                         <postback>DETAIL</postback>
@@ -132,7 +117,7 @@
                 <card>
                     <image>https://miro.medium.com/v2/resize:fit:640/format:webp/1*DFs24mX1l4gvOK0z7AHtzw.png</image>
                     <title>CREATIVITY</title>
-                    <subtitle>Image Credit: Medium</subtitle>
+                    <subtitle>the ability to generate ideas using imagination</subtitle>
                     <button>
                         <text>Choose this Strength</text>
                         <postback>CREATIVITY</postback>
@@ -198,7 +183,7 @@
                 <card>
                     <image>https://miro.medium.com/v2/resize:fit:720/format:webp/1*cyFiPYlORkVo6N75h9AXSw.png</image>
                     <title>DESIGN</title>
-                    <subtitle>Image Credit: Medium</subtitle>
+                    <subtitle>finding enjoyment in the arrangement of visual patterns</subtitle>
                     <button>
                         <text>Choose this Interest</text>
                         <postback>DESIGN</postback>
@@ -207,7 +192,7 @@
                 <card>
                     <image>https://imageio.forbes.com/specials-images/imageserve/633ab081896f45d78d8286fd/Focused-multiracial-corporate-business-team-people-brainstorm-on-paperwork/960x0.jpg?format=jpg&amp;width=1440</image>
                     <title>COLLABORATION</title>
-                    <subtitle>Image Credit: Forbes</subtitle>
+                    <subtitle>enjoying the act of working with others</subtitle>
                     <button>
                         <text>Choose this Interest</text>
                         <postback>COLLABORATION</postback>
@@ -216,7 +201,7 @@
                 <card>
                     <image>https://imageio.forbes.com/specials-images/imageserve/63cae666a1d8bd53146e3aec/Bulb-means-an-idea-/960x0.jpg?format=jpg&amp;width=1440</image>
                     <title>INNOVATION</title>
-                    <subtitle>Image Credit: Forbes</subtitle>
+                    <subtitle>having an interest in discovering new ways to do old things</subtitle>
                     <button>
                         <text>Choose this Interest</text>
                         <postback>INNOVATION</postback>
@@ -282,7 +267,7 @@
                 <card>
                     <image>https://img.huffingtonpost.com/asset/5e696095230000a6210c39b6.jpeg?ops=scalefit_720_noupscale&amp;format=webp</image>
                     <title>FUN</title>
-                    <subtitle>Image Credit: HuffPost</subtitle>
+                    <subtitle>being motivated by enjoyment and pleasure in the workplace</subtitle>
                     <button>
                         <text>Choose this Inspiration</text>
                         <postback>FUN</postback>
@@ -291,7 +276,7 @@
                 <card>
                     <image>https://sourcesofinsight.com/wp-content/uploads/2015/06/image_thumb1.png</image>
                     <title>VISION</title>
-                    <subtitle>Image Credit: Sources of Insight</subtitle>
+                    <subtitle>being motivated by inventiveness and exploration in the workplace</subtitle>
                     <button>
                         <text>Choose this Inspiration</text>
                         <postback>VISION</postback>
@@ -300,7 +285,7 @@
                 <card>
                     <image>https://nsckenticotest.blob.core.windows.net/cms/nsc.org/media/site-media/blog/featured/award700x450.jpg?ext=.jpg</image>
                     <title>PRESTIGE</title>
-                    <subtitle>Image Credit: National Safety Council</subtitle>
+                    <subtitle>being motivated by acquiring status and privilege in the workplace</subtitle>
                     <button>
                         <text>Choose this Inspiration</text>
                         <postback>PRESTIGE</postback>
@@ -425,7 +410,7 @@
                     <card>
                         <image>https://www.techasoft.com/blog/2020/11/1605160119.jpg</image>
                         <title>SOFTWARE ENGINEER</title>
-                        <subtitle>Image Credit: Techasoft</subtitle>
+                        <subtitle>plan, build, and develop software applications</subtitle>
                         <button>
                             <text>Explore This Career</text>
                             <url>https://www.wgu.edu/career-guide/information-technology/software-engineer-career.html</url>
@@ -441,7 +426,7 @@
                     <card>
                         <image>https://images.ctfassets.net/aq13lwl6616q/SKjadNj7ZN5QcUZmzI7G2/650d8c7c23a66702c7469ffb78d0ee2b/Become_a_UI_UX_Designer.jpg?w=400&amp;h=225&amp;q=50&amp;fm=webp&amp;bg=transparent</image>
                         <title>UX DESIGNER</title>
-                        <subtitle>Image Credit: Zero to Mastery</subtitle>
+                        <subtitle>draft and design user interfaces</subtitle>
                         <button>
                             <text>Explore This Career</text>
                             <url>https://www.wgu.edu/career-guide/information-technology/ux-designer-career.html</url>
@@ -456,8 +441,7 @@
                     <card>
                         <image>https://images.ctfassets.net/pdf29us7flmy/41pdeRHbaKm8rJr8TzPgdA/5f4bdfc0838fd94575785935867762ad/information-management-new.jpg?w=414&amp;q=100&amp;fm=avif</image>
                         <title>INFORMATION MANAGER</title>
-                        <subtitle>Image Credit: Indeed</subtitle>
-                        
+                        <subtitle>manage data security and protection protocols</subtitle>
                         <button>
                             <text>Explore This Career</text>
                             <url>https://www.wgu.edu/career-guide/information-technology/information-manager-career.html</url>
@@ -472,7 +456,7 @@
                     <card>
                         <image>https://www.johnsnowlabs.com/wp-content/uploads/2023/03/img_blog-1-1024x536.jpg</image>
                         <title>NLP SCIENTIST</title>
-                        <subtitle>Image Credit: John Snow Labs</subtitle>
+                        <subtitle>analyze and design the language components of programs</subtitle>
                         <button>
                             <text>Explore This Career</text>
                             <url>https://www.wgu.edu/career-guide/information-technology/nlp-scientist-career.html</url>
@@ -487,7 +471,7 @@
                     <card>
                         <image>https://hashbytestudio.com/wp-content/uploads/2021/01/Game-Development-banner-1024x808.png</image>
                         <title>GAME DEVELOPER</title>
-                        <subtitle>Image Credit: Hash by the Studio</subtitle>
+                        <subtitle>design, code, and test game applications</subtitle>
                         <button>
                             <text>Explore This Career</text>
                             <url>https://www.wgu.edu/career-guide/information-technology/video-game-developer-career.html</url>
@@ -499,6 +483,8 @@
                     </card>
                 </li>
             </condition>
+            <split/>
+            Click the links above to explore your career match. See you next time, <get name="name" />.
         </template>
     </category>
 </aiml>
